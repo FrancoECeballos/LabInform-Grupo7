@@ -1,0 +1,22 @@
+vlan 10
+name vlan10
+interface vlan 10
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+exit
+
+interface gig1/0/1
+switchport mode trunk
+switchport trunk allowed vlan 10
+no shutdown
+exit
+
+interface range gig1/0/1-5
+switchport mode access
+switchport access vlan 10
+no shutdown
+exit
+
+(layer 3 switch only)
+conf t
+ip routing
