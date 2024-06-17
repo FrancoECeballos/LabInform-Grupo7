@@ -1,3 +1,4 @@
+(Create vlans and asign ip)
 vlan 10
 name vlan10
 interface vlan 10
@@ -5,18 +6,43 @@ ip address 192.168.1.1 255.255.255.0
 no shutdown
 exit
 
-interface gig1/0/1
+(Cofigure switch conections)
+interface gig 1/0/1
 switchport mode trunk
 switchport trunk allowed vlan 10
 no shutdown
 exit
 
+(Cofigure Host ports on Switches)
 interface range gig1/0/1-5
 switchport mode access
 switchport access vlan 10
 no shutdown
 exit
 
-(layer 3 switch only)
+(Allow routing on Layer 3 switch)
 conf t
 ip routing
+router ospf 1 
+network 192.168.1.0 0.0.0.255 area 0
+
+(Asign address to port)
+interface gig 1/0/24
+no switchport 
+ip address 192.168.1.1 255.255.255.0
+
+(Security)
+conf t
+line console 0
+password Lab1
+login
+exit
+
+line vty 0 3
+password Lab1
+login
+exit
+
+enable password Lab1
+
+enable secret 2024
